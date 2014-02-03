@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="vendor/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="vendor/mocha/mocha.js"></script>
+    <script src="vendor/chai/chai.js"></script>
+    <script>
+      mocha.ui('bdd');
+      mocha.reporter('html');
+      expect = chai.expect;
+      assert = chai.assert;
+      should = chai.should;
+    </script>
+    
+    <script type="text/javascript" src="/vendor/requirejs/require.js" data-main="test.js"></script>
+    
+    <script>
+        require(['test'], function() {
+            if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+            else { mocha.run(); }
+        });
+    </script>
+  </body>
+</html>

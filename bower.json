@@ -1,0 +1,20 @@
+{
+  "name": "UnitTest",
+  "version": "0.0.1",
+  "authors": [
+    "Webtech 20minutes <webtech@20minutes.fr>"
+  ],
+  "description": "UnitTest - 20minutes.fr",
+  "dependencies": {
+    "requirejs": "2.1.*",
+    "requirejs-text": "2.0.*",
+    "underscore-amd": "1.5.*",
+    "backbone-amd": "1.0.*",
+    "bootstrap": "2.3.2",
+    "jquery": "1.9.1",
+    "mocha": "1.17.1",
+    "expect": "0.1.2",
+    "chai": "1.9.0",
+    "sinon": "git://github.com/cjohansen/Sinon.JS.git"
+  }
+}
