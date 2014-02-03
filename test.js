@@ -11,7 +11,6 @@ define(['jquery', "webpage"], function($, webpage) {
     
     var page = webpage.create("article");
     
-    
     // page.remove()
     
     // var content = _.template(page, {
