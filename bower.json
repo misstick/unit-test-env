@@ -10,7 +10,7 @@
     "requirejs-text": "2.0.*",
     "underscore-amd": "1.5.*",
     "backbone-amd": "1.0.*",
-    "bootstrap": "2.3.2",
+    "underscore": "1.5.2",
     "jquery": "1.9.1",
     "mocha": "1.17.1",
     "expect": "0.1.2",
