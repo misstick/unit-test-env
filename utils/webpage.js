@@ -1,10 +1,14 @@
-define(['jquery'], function(jquery) {
+define(['jquery', "underscore"], function(jquery, _) {
     "use strict";
+    
+    var setContent = function(url) {
+        
+    };
     
     var getIframe = function(uri) {
         var iframe;
         var id = "iframe-" + uri;
-        var url = "/templates/" + uri + ".html";
+        var url = "/pages/" + uri + ".html";
         var style = "background: #efefef; border: 0; width: 40%; height: 700px; position: fixed; right: 0; top: 100px;";
         if (!(iframe = $("#" + id).get(0))) {
             $("body").append("<iframe id='" + id + "' src='" + url + "' style='" + style +"'>");
@@ -18,7 +22,23 @@ define(['jquery'], function(jquery) {
             // var _window = _iframe.contentWindow;
             // var _page = _window.document
             create: function(uri) {
-                return getIframe(uri);
+                
+                var iframe = getIframe(uri);
+                var model = {
+                  title: "PLOP",
+                  src: "/image/test.png",
+                  cid: "c250"
+                };
+                
+                require(["text!/templates/" + uri + ".html"], function(template) {
+                    var _window = iframe.contentWindow;
+                    var content = _.template(template, model);
+                    var el = $("#main-content", _window.document)
+                    el.html(content);
+                    el.trigger("click");
+                });
+                
+                return iframe;
             }
         }
     })();
