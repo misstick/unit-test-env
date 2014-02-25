@@ -6,25 +6,70 @@
         <style>
             #main-content {
                 background: yellow;
-                width: 100px;
-                height: 100px;
+                overflow: hidden;
+            }
+            figure {
+                padding: 0;
+                margin: 0;
+                float: left;
+                
+                width: 250px;
+                height: 250px;
+            }
+            figure .trash-button,
+            figure .edit-button {
+                width: 33%;
+                border: 0;
+                background: white;
+                line-height: 1;
+            }
+            figure .trash-button:after {
+                content: "supprimer";
+            }
+            figure .edit-button:after {
+                content: "Editer";
+            }
+            figure .illustration>img{
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
             }
         </style>
     </head>
     <body>
         <div id="main-content"></div>
         <script>
-            var model = {
-              title: "PLOP",
-              src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg",
-              cid: "c250"
-            };
-            $.ajax("/templates/article.html").done(function(template) {
-                var content = _.template(template, model);
-                var el = $("#main-content").html(content);
+            var collection = [];
+            collection.push({
+                title: "Image1",
+                illustration: true,
+                src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg",
+                cid: "c1"
             });
-            $("#main-content").on("click", function() {
-                console.log("Content is applyed");
+            collection.push({
+                title: "Image2",
+                illustration: false,
+                src: "http://miriadna.com/desctopwalls/images/max/Surprised-eagle-owl.jpg",
+                cid: "c2"
+            });
+            collection.push({
+                title: "Image3",
+                illustration: false,
+                src: "http://i.telegraph.co.uk/multimedia/archive/02467/owl_2467479b.jpg",
+                cid: "c3"
+            });
+            collection.push({
+                title: "Image4",
+                illustration: false,
+                src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg",
+                cid: "c4"
+            });
+            $.ajax("/templates/article.html").done(function(template) {
+                
+                _.each(collection, function(model) {
+                    var content = _.template(template, model);
+                    $("#main-content").append(content)
+                })
             });
         </script>
     </body>
