@@ -26,7 +26,7 @@ define(['jquery', "underscore"], function(jquery, _) {
                 var iframe = getIframe(uri);
                 var model = {
                   title: "PLOP",
-                  src: "/image/test.png",
+                  src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg",
                   cid: "c250"
                 };
                 
@@ -35,7 +35,6 @@ define(['jquery', "underscore"], function(jquery, _) {
                     var content = _.template(template, model);
                     var el = $("#main-content", _window.document)
                     el.html(content);
-                    el.trigger("click");
                 });
                 
                 return iframe;
