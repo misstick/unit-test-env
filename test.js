@@ -12,14 +12,13 @@ define(['jquery', "webpage"], function($, webpage) {
     
     var page = webpage.create("article");
     
-    // page.remove()
     
-    // var content = _.template(page, {
-    //   title: "PLOP",
-    //   src: "/image/test.png",
-    //   cid: "c250"
-    // });
-
+    /*
+     - les templates utilisés (présence des attributs adéquats)
+     - unitairement les méthodes simples des vues
+     - unitairement les collection/models de données
+     - le bon envoie des événements
+    */
 
     // plop.close();
     // including all the tests
@@ -33,5 +32,8 @@ define(['jquery', "webpage"], function($, webpage) {
     //     })
     //   })
     // });
+
+    // page.remove()
+
 
 });

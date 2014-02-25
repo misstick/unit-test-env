@@ -1,6 +1,1 @@
-<html>
-<body>
-    PLOP
-</body>
-
-</html>
+// Add Her test for articles.js
