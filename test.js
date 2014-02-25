@@ -10,8 +10,9 @@ require.config({
 define(['jquery', "webpage"], function($, webpage) {
     "use strict";
     
-    var page = webpage.create("article");
+    var page = webpage.open("article");
     
+    // webpage.close("article");
     
     /*
      - les templates utilisés (présence des attributs adéquats)
@@ -20,7 +21,7 @@ define(['jquery', "webpage"], function($, webpage) {
      - le bon envoie des événements
     */
 
-    // plop.close();
+    // page.close();
     // including all the tests
     //  @TODO : ADD ALL PAGE HERE
     // // DEFAULT TEST
