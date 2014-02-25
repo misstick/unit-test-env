@@ -19,7 +19,7 @@ define(['jquery', "underscore"], function(jquery, _) {
                 if (this.pages[uri]) {
                     return this.pages[uri];
                 }
-                this.pages[uri] = window.open("/pages/" + uri + ".html");
+                this.pages[uri] = window.open("/pages/" + uri + "/index.html");
                 return this.pages[uri];
             },
             
