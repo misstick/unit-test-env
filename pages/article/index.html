@@ -35,6 +35,9 @@
                 width: 100%;
                 box-sizing: border-box;
             }
+            article textarea[disabled] {
+                display: none;
+            }
             
             .modal {
                 background: rgba(0,0,0,0.5);
@@ -103,7 +106,7 @@
 
                 events: {
                     'click [data-modal]': 'openModal',
-                    'click .edit-button': 'displayEditView',
+                    'click [data-toggle]': 'displayToggle',
                     'click .modal': 'closeModal'
                 },
 
@@ -151,8 +154,25 @@
                     $(el).remove();
                 },
                 
-                displayEditView: function(event) {
-                    event.preventDefault()
+                disable: function(el, value) {
+                    if (value === undefined) {
+                        value = true;
+                    }
+                    if (value) {
+                        el.attr("disabled", "disabled");
+                    } else {
+                        el.removeAttr("disabled");
+                    }
+                },
+                
+                displayToggle: function(event) {
+                    event.preventDefault();
+                    var el = event.currentTarget;
+                    var parent = $(el).parents("article");
+                    var path = $(el).attr("data-toggle");
+                    var toggleEl = $(path, parent.get(0));
+                    
+                    this.disable(toggleEl, toggleEl.attr("disabled") === undefined);
                 }
             });
 
