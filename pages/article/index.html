@@ -39,6 +39,7 @@
     <body>
         <div id="main-content"></div>
         <script>
+            var _window = window.opener || window;
             var collection = [];
             collection.push({
                 title: "Image1",
@@ -65,11 +66,10 @@
                 cid: "c4"
             });
             $.ajax("/templates/article.html").done(function(template) {
-                
                 _.each(collection, function(model) {
                     var content = _.template(template, model);
-                    $("#main-content").append(content)
-                })
+                    $("#main-content").append(content);
+                });
             });
         </script>
     </body>
