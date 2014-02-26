@@ -1,5 +1,5 @@
 // Add Her test for articles.js
-define(['jquery', "underscore", "webpage"], function($, _, webpage) {
+define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) {
     "use strict";
 
     /*
@@ -30,21 +30,23 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
             it('Should select Item', function(){
               var _index, _model, checkbox;
               // Item selected
-              _model = _.find(collection, function(model, index) {
-                  if (model.illustration) {
+              _model = collection.find(function(model, index) {
+                  var _value = model.get("illustration")
+                  if (_value) {
                       _index = index;
                   }
-                  return model.illustration;
+                  return _value;
               })
               checkbox = $('[name="medias[][illustration]"]', page.document).get(_index);
               assert.equal($(checkbox).attr("checked"), "checked");
               
               // Item unselected
-              _model = _.find(collection, function(model, index) {
-                  if (!model.illustration) {
+              _model = collection.find(function(model, index) {
+                  var _value = model.get("illustration")
+                  if (!_value) {
                       _index = index;
                   }
-                  return !model.illustration;
+                  return !_value;
               });
               checkbox = $('[name="medias[][illustration]"]', page.document).get(_index);
               assert.equal($(checkbox).attr("checked"), undefined);
@@ -68,6 +70,7 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
                 assert.lengthOf(draggableEl, 1);
             });
         });
+
 
         after(function(){
             webpage.close("article");

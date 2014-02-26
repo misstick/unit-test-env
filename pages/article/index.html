@@ -2,6 +2,7 @@
     <head>
         <script src="/vendor/jquery/jquery.js"></script>
         <script src="/vendor/underscore-amd/underscore.js"></script>
+        <script src="/vendor/backbone-amd/backbone.js"></script>
 
         <style>
             #main-content {
@@ -40,34 +41,37 @@
         <div id="main-content"></div>
         <script>
             var templatePath = "/templates/article.html";
-            var collection = [];
-            collection.push({
+            var models = [];
+            var ArticleCollection = Backbone.Collection.extend({
+                
+            });
+            models.push({
                 title: "Image1",
                 illustration: false,
-                src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg",
-                cid: "c1"
+                src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg"
             });
-            collection.push({
+            models.push({
                 title: "Image2",
                 illustration: false,
-                src: "http://miriadna.com/desctopwalls/images/max/Surprised-eagle-owl.jpg",
-                cid: "c2"
+                src: "http://miriadna.com/desctopwalls/images/max/Surprised-eagle-owl.jpg"
             });
-            collection.push({
+            models.push({
                 title: "Image3",
                 illustration: true,
-                src: "http://i.telegraph.co.uk/multimedia/archive/02467/owl_2467479b.jpg",
-                cid: "c3"
+                src: "http://i.telegraph.co.uk/multimedia/archive/02467/owl_2467479b.jpg"
             });
-            collection.push({
+            models.push({
                 title: "Image4",
                 illustration: false,
-                src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg",
-                cid: "c4"
+                src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg"
             });
+            
+            var collection = new ArticleCollection(models);
             $.ajax(templatePath).done(function(template) {
-                _.each(collection, function(model) {
-                    var content = _.template(template, model);
+                collection.each(function(model) {
+                    var data = model.toJSON();
+                    data.cid = model.cid;
+                    var content = _.template(template, data);
                     $("#main-content").append(content);
                 });
             });
