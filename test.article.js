@@ -12,7 +12,7 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
     var page, collection, articles;
 
     // Test des templates utilisés
-    describe('Templates Syntax', function(){
+    describe('DOM', function(){
         before(function(done){
             page = webpage.open("article");
             $("body").on("page:complete", function(event, data) {
@@ -22,13 +22,13 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
             }.bind(this))
         });
 
-        describe('Article.Item', function(){
+        describe('Article', function(){
 
             it('Should have as many items as models', function(){
               assert.equal(collection.length, articles.length);
             });
 
-            it('Should select Item as an illustration', function(){
+            it('Should select Item', function(){
               var _index, _model, checkbox;
               // Item selected
               _model = _.find(collection, function(model, index) {
@@ -51,8 +51,16 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
               assert.equal($(checkbox).attr("checked"), undefined);
             });
             
-            it('Should have Modal <markup>', function(){
-                // zoom-media-modal, delete-media-modal
+            it('Should call Modal component', function(){
+                var modalOpener, id;
+
+                id = "zoom-modal";
+                modalOpener = $('.illustration[data-modal="#' + id + '"]', articles.get(0));
+                assert.lengthOf(modalOpener, 1);
+
+                id = "delete-modal";
+                modalOpener = $('.trash-button[data-modal="#' + id + '"]', articles.get(0));
+                assert.lengthOf(modalOpener, 1);
             });
             
             it('Picture should be draggable', function(){
