@@ -73,7 +73,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
               assert.equal($(checkbox).attr("checked"), undefined);
             });
             
-            it('Should call Modal component', function(){
+            it('Should call Modal', function(){
                 var modalOpener, id;
 
                 id = "zoom-modal";
@@ -94,7 +94,11 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
 
         describe('Views', function(){
 
-            it('Should open modal component', function(){
+            it('Should open Modal', function(){
+                
+            });
+
+            it('Should hide Modal', function(){
                 
             });
 
