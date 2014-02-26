@@ -21,7 +21,11 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
             }.bind(this))
         });
 
-        describe('Media.Item', function(){
+        describe('Article.Item', function(){
+
+            it('Should have as many items as models', function(){
+              assert.equal(collection.length, $("article", page.document).length);
+            });
 
             it('Should select Item as an illustration', function(){
               // medias[][illustration]-> selected ?
