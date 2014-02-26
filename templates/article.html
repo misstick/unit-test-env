@@ -1,4 +1,4 @@
-<figure data-model="<%= cid %>">
+<article data-model="<%= cid %>">
     <textarea name="medias[][caption]"><%= title %></textarea>
 
     <a class="illustration" title="Taille réelle de la photo" data-modal="#zoom-media-modal"><img src="<%= src %>" alt="" data-media-model="<%= cid %>" data-wysiwyg-draggable="true" /></a>
@@ -10,4 +10,4 @@
             <input type="checkbox" name="medias[][illustration]" value="<%= cid %>" <% if (illustration) { %> checked="checked"<% } %> />
         </label>
     </div>
-</figure>
+</article>

@@ -39,7 +39,7 @@
     <body>
         <div id="main-content"></div>
         <script>
-            var _window = window.opener || window;
+            var templatePath = "/templates/article.html";
             var collection = [];
             collection.push({
                 title: "Image1",
@@ -65,7 +65,7 @@
                 src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg",
                 cid: "c4"
             });
-            $.ajax("/templates/article.html").done(function(template) {
+            $.ajax(templatePath).done(function(template) {
                 _.each(collection, function(model) {
                     var content = _.template(template, model);
                     $("#main-content").append(content);
