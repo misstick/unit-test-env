@@ -35,6 +35,15 @@
                 width: 100%;
                 box-sizing: border-box;
             }
+            
+            .modal {
+                background: rgba(0,0,0,0.5);
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+            }
         </style>
     </head>
     <body>
@@ -94,7 +103,8 @@
 
                 events: {
                     'click [data-modal]': 'openModal',
-                    'click .edit-button': 'displayEditView'
+                    'click .edit-button': 'displayEditView',
+                    'click .modal': 'closeModal'
                 },
 
                 initialize: function(options) {
@@ -116,16 +126,29 @@
                     if (!this._initialized) {
                         this.collection.each(_renderItem);
                         this._initialized = true;
-                        return;
                     }
 
-                    if (models === object && models.length) {
+                    // @TODO : test width ADD event
+                    if (typeof models === "object" && models.length) {
                         _.each(models, _renderItem);
                     }
                 },
                 
                 openModal: function(event) {
-                    event.preventDefault()
+                    event.preventDefault();
+                    var el = event.currentTarget;
+                    var path = $(el).attr("data-modal");
+                    var id = path.substring(0, path.length);
+                    if ($(path).get(0)) {
+                        return $(path);
+                    }
+                    $(this.el).append('<div id="' + id + '" class="modal"></span></div>');
+                    return $(path);
+                },
+                
+                closeModal: function(event) {
+                    var el = event.currentTarget;
+                    $(el).remove();
                 },
                 
                 displayEditView: function(event) {
