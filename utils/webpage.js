@@ -16,11 +16,22 @@ define(['jquery', "underscore"], function(jquery, _) {
         return {
             pages: {},
             open: function(uri) {
-                if (this.pages[uri]) {
-                    return this.pages[uri];
+                var _page = this.pages[uri];
+                if (!_page) {
+                    // Open Page
+                    _page = window.open("/pages/" + uri + "/index.html");
+                    // Handle page.loading
+                    $(_page.document).ready(function() {
+                        setTimeout(function() {
+                            $("body").trigger("page:complete", {
+                                collection: _page.collection
+                            });
+                        }, 500);
+                    });
+                    // Savee Page not to open it several times
+                    this.pages[uri] = _page;
                 }
-                this.pages[uri] = window.open("/pages/" + uri + "/index.html");
-                return this.pages[uri];
+                return _page;
             },
             
             close: function(uri) {
