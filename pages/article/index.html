@@ -42,8 +42,25 @@
         <script>
             var templatePath = "/templates/article.html";
             var models = [];
+            
+            var Article = Backbone.Model.extend({
+                isSelected: function() {
+                    return this.get("illustration");
+                },
+                select: function(options) {
+                    this.set({"illustration": true}, options);
+                    this.trigger('change:fake');
+                }
+            });
             var ArticleCollection = Backbone.Collection.extend({
-                
+                model: Article,
+                stringify: function() {
+                    return JSON.stringify(this.toJSON());
+                },
+                add: function(models, options) {
+                    this.previousSize = this.size();
+                    Backbone.Collection.prototype.add.apply(this, arguments);
+                }
             });
             models.push({
                 title: "Image1",
@@ -65,7 +82,6 @@
                 illustration: false,
                 src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg"
             });
-            
             var collection = new ArticleCollection(models);
             $.ajax(templatePath).done(function(template) {
                 collection.each(function(model) {

@@ -21,6 +21,25 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
             }.bind(this))
         });
 
+        describe('Model', function(){
+
+            it('Should select a model', function(){
+                // Test previous && new value
+                // test if event "change:fake" is triggered
+            });
+        });
+
+        describe('Collection', function(){
+
+            it('Should stringify models', function(){
+                
+            });
+
+            it('Should store previousSize', function(){
+                
+            });
+        });
+
         describe('DOM', function(){
 
             it('Should have as many items as models', function(){
@@ -70,7 +89,6 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                 assert.lengthOf(draggableEl, 1);
             });
         });
-
 
         after(function(){
             webpage.close("article");
