@@ -8,7 +8,7 @@
                 background: yellow;
                 overflow: hidden;
             }
-            figure {
+            article {
                 padding: 0;
                 margin: 0;
                 float: left;
@@ -16,20 +16,20 @@
                 width: 250px;
                 height: 250px;
             }
-            figure .trash-button,
-            figure .edit-button {
+            article .trash-button,
+            article .edit-button {
                 width: 33%;
                 border: 0;
                 background: white;
                 line-height: 1;
             }
-            figure .trash-button:after {
+            article .trash-button:after {
                 content: "supprimer";
             }
-            figure .edit-button:after {
+            article .edit-button:after {
                 content: "Editer";
             }
-            figure .illustration>img{
+            article .illustration>img{
                 display: block;
                 width: 100%;
                 box-sizing: border-box;
@@ -43,7 +43,7 @@
             var collection = [];
             collection.push({
                 title: "Image1",
-                illustration: true,
+                illustration: false,
                 src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg",
                 cid: "c1"
             });
@@ -55,7 +55,7 @@
             });
             collection.push({
                 title: "Image3",
-                illustration: false,
+                illustration: true,
                 src: "http://i.telegraph.co.uk/multimedia/archive/02467/owl_2467479b.jpg",
                 cid: "c3"
             });
