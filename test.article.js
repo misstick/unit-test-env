@@ -65,7 +65,7 @@ define(['jquery', "underscore", "webpage"], function($, _, webpage) {
             
             it('Picture should be draggable', function(){
                 var draggableEl;
-                draggableEl = $('.illustration[data-wysiwyg-draggable="true"]', articles.get(0));
+                draggableEl = $('img[data-wysiwyg-draggable="true"]', articles.get(0));
                 assert.lengthOf(draggableEl, 1);
             });
         });
