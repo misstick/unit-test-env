@@ -8,7 +8,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
      - unitairement les collection/models de données
     */
     
-    var page, collection, articles;
+    var page, view, collection, model, articles;
 
     // Test des templates utilisés
     describe('Article', function(){
@@ -16,7 +16,9 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
             page = webpage.open("article");
             $("body").on("page:complete", function(event, data) {
                 articles = $("article", page.document);
-                collection = data.collection;
+                view = data.view;
+                collection = view.collection;
+                model = collection.model;
                 done();
             }.bind(this))
         });
@@ -87,6 +89,17 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                 var draggableEl;
                 draggableEl = $('img[data-wysiwyg-draggable="true"]', articles.get(0));
                 assert.lengthOf(draggableEl, 1);
+            });
+        });
+
+        describe('Views', function(){
+
+            it('Should open modal component', function(){
+                
+            });
+
+            it('Should display editable title', function(){
+                
             });
         });
 

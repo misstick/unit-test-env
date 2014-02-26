@@ -24,7 +24,7 @@ define(['jquery', "underscore"], function(jquery, _) {
                     $(_page.document).ready(function() {
                         setTimeout(function() {
                             $("body").trigger("page:complete", {
-                                collection: _page.collection
+                                view: _page.view
                             });
                         }, 500);
                     });

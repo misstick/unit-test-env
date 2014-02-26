@@ -42,7 +42,9 @@
         <script>
             var templatePath = "/templates/article.html";
             var models = [];
-            
+            var view;
+
+            // Data methods
             var Article = Backbone.Model.extend({
                 isSelected: function() {
                     return this.get("illustration");
@@ -82,14 +84,59 @@
                 illustration: false,
                 src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg"
             });
-            var collection = new ArticleCollection(models);
+
+            // Articles Component
+            var articlesView = Backbone.View.extend({
+
+                el: $("#main-content"),
+
+                collection: new ArticleCollection(models),
+
+                events: {
+                    'click [data-modal]': 'openModal',
+                    'click .edit-button': 'displayEditView'
+                },
+
+                initialize: function(options) {
+                    this.collection.on("add", this.render.bind(this));
+                    this._template = options.template;
+                    if (this.collection.size()) {
+                        this.render();
+                    }
+                },
+
+                render: function(models) {
+                    var _renderItem = function(model) {
+                        var data = model.toJSON();
+                        data.cid = model.cid;
+                        var content = _.template(this._template, data);
+                        $(this.el).append(content);
+                    }.bind(this);
+
+                    if (!this._initialized) {
+                        this.collection.each(_renderItem);
+                        this._initialized = true;
+                        return;
+                    }
+
+                    if (models === object && models.length) {
+                        _.each(models, _renderItem);
+                    }
+                },
+                
+                openModal: function(event) {
+                    event.preventDefault()
+                },
+                
+                displayEditView: function(event) {
+                    event.preventDefault()
+                }
+            });
+
+            // Add Dynamic Content
             $.ajax(templatePath).done(function(template) {
-                collection.each(function(model) {
-                    var data = model.toJSON();
-                    data.cid = model.cid;
-                    var content = _.template(template, data);
-                    $("#main-content").append(content);
-                });
+                view = new articlesView({template: template});
+                
             });
         </script>
     </body>
