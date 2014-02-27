@@ -8,14 +8,10 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
      - unitairement les collection/models de données
     */
     
-    var page, view, collection, model;
-    
-    var getDocument = function() {
-        return page.contentWindow.document;
-    }
+    var page, view, collection, model, pageDocument;
     
     var getArticles = function() {
-        return $("article", getDocument());
+        return $("article", pageDocument);
     }
 
     // Test des templates utilisés
@@ -23,7 +19,8 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         before(function(done){
             page = webpage.open("article");
             $("body").on("page:complete", function(event) {
-                view = page.contentWindow.view;
+                view = page.view;
+                pageDocument = page.document;
                 collection = view.collection;
                 model = collection.model;
                 done();
@@ -77,8 +74,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
             });
 
             it('Should select Item', function(){
-              var _index, _model, checkbox, _document;
-              _document = getDocument();
+              var _index, _model, checkbox;
               // Item selected
               _model = collection.find(function(model, index) {
                   var _value = model.get("illustration")
@@ -87,7 +83,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                   }
                   return _value;
               })
-              checkbox = $('[name="medias[][illustration]"]', _document).get(_index);
+              checkbox = $('[name="medias[][illustration]"]', pageDocument).get(_index);
               assert.equal($(checkbox).attr("checked"), "checked");
               
               // Item unselected
@@ -98,7 +94,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                   }
                   return !_value;
               });
-              checkbox = $('[name="medias[][illustration]"]', _document).get(_index);
+              checkbox = $('[name="medias[][illustration]"]', pageDocument).get(_index);
               assert.equal($(checkbox).attr("checked"), undefined);
             });
             
@@ -126,20 +122,19 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         describe('Views', function(){
 
             it('Should show/hide Modal', function(){
-                var _document = getDocument();
                 var _article = getArticles().get(0);
                 var _id = "delete-modal"
                 var _link = $('[data-modal="#' + _id + '"]', _article);
 
                 // Show Modal
-                assert.equal($("#" + _id, _document).length, 0);
+                assert.equal($("#" + _id, pageDocument).length, 0);
                 _link.trigger("click");
-                assert.equal($("#" + _id, _document).length, 1);
+                assert.equal($("#" + _id, pageDocument).length, 1);
 
                 // Hide Modal
-                var _modal = $("#" + _id, _document);
+                var _modal = $("#" + _id, pageDocument);
                 _modal.trigger("click");
-                assert.equal($("#" + _id, _document).length, 0);
+                assert.equal($("#" + _id, pageDocument).length, 0);
 
             });
 
@@ -149,7 +144,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         });
 
         after(function(){
-            // webpage.close("article");
+            webpage.close("article");
         });
     });
 });

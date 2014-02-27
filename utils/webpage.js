@@ -21,9 +21,7 @@ define(['jquery', "underscore"], function(jquery, _) {
                     // Open Page
                     var id = "iframe-" + uri;
                     var url = "/pages/" + uri + "/index.html";
-                    var style = "background: #efefef; border: 0; width: 40%; height: 700px; position: fixed; right: 0; top: 100px;";
-                    $("body").append("<iframe id='" + id + "' src='" + url + "' style='" + style +"'>");
-                    _page = $("#" + id).get(0);
+                    _page = window.open(url);
                     
                     // Handle page.loading
                     $(_page.document).ready(function() {
@@ -40,7 +38,7 @@ define(['jquery', "underscore"], function(jquery, _) {
             close: function(uri) {
                 var page = this.pages[uri];
                 if (page) {
-                    page.remove();
+                    page.close();
                     delete this.pages[uri];
                 }
             }
