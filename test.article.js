@@ -26,9 +26,8 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         describe('Model', function(){
 
             it('Should select a model', function(){
-
                 var _model = new model({
-                    title: "Image10",
+                    title: "Image5",
                     illustration: false,
                     src: "http://www.tuxboard.com/photos/2013/06/Chouette-en-folie-4.jpg"
                 });
@@ -50,11 +49,16 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
 
         describe('Collection', function(){
 
-            it('Should stringify models', function(){
-            });
-
             it('Should store previousSize', function(){
-                
+                var oldSize = collection.size();
+                // No previous Size
+                assert.equal(collection.previousSize, 0);
+                collection.add({
+                    title: "Image5",
+                    illustration: false,
+                    src: "http://www.tuxboard.com/photos/2013/06/Chouette-en-folie-4.jpg"
+                });
+                assert.equal(collection.previousSize, oldSize);
             });
         });
 
