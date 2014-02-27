@@ -10,16 +10,20 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
     
     var page, view, collection, model;
     
+    var getDocument = function() {
+        return page.contentWindow.document;
+    }
+    
     var getArticles = function() {
-        return $("article", page.document);
+        return $("article", getDocument());
     }
 
     // Test des templates utilisés
     describe('Article', function(){
         before(function(done){
             page = webpage.open("article");
-            $("body").on("page:complete", function(event, data) {
-                view = data.view;
+            $("body").on("page:complete", function(event) {
+                view = page.contentWindow.view;
                 collection = view.collection;
                 model = collection.model;
                 done();
@@ -73,7 +77,8 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
             });
 
             it('Should select Item', function(){
-              var _index, _model, checkbox;
+              var _index, _model, checkbox, _document;
+              _document = getDocument();
               // Item selected
               _model = collection.find(function(model, index) {
                   var _value = model.get("illustration")
@@ -82,7 +87,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                   }
                   return _value;
               })
-              checkbox = $('[name="medias[][illustration]"]', page.document).get(_index);
+              checkbox = $('[name="medias[][illustration]"]', _document).get(_index);
               assert.equal($(checkbox).attr("checked"), "checked");
               
               // Item unselected
@@ -93,7 +98,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                   }
                   return !_value;
               });
-              checkbox = $('[name="medias[][illustration]"]', page.document).get(_index);
+              checkbox = $('[name="medias[][illustration]"]', _document).get(_index);
               assert.equal($(checkbox).attr("checked"), undefined);
             });
             
