@@ -14,7 +14,6 @@
     "jquery": "1.9.1",
     "mocha": "1.17.1",
     "expect": "0.1.2",
-    "chai": "1.9.0",
-    "sinon": "git://github.com/cjohansen/Sinon.JS.git"
+    "chai": "1.9.0"
   }
 }
