@@ -118,7 +118,7 @@
                     }
                 },
 
-                render: function(models) {
+                render: function(model, collection) {
                     var _renderItem = function(model) {
                         var data = model.toJSON();
                         data.cid = model.cid;
@@ -132,8 +132,8 @@
                     }
 
                     // @TODO : test width ADD event
-                    if (typeof models === "object" && models.length) {
-                        _.each(models, _renderItem);
+                    if (typeof model === "object" && model.cid) {
+                        _renderItem(model);
                     }
                 },
                 

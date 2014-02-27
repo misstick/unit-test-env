@@ -8,14 +8,17 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
      - unitairement les collection/models de données
     */
     
-    var page, view, collection, model, articles;
+    var page, view, collection, model;
+    
+    var getArticles = function() {
+        return $("article", page.document);
+    }
 
     // Test des templates utilisés
     describe('Article', function(){
         before(function(done){
             page = webpage.open("article");
             $("body").on("page:complete", function(event, data) {
-                articles = $("article", page.document);
                 view = data.view;
                 collection = view.collection;
                 model = collection.model;
@@ -59,13 +62,17 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                     src: "http://www.tuxboard.com/photos/2013/06/Chouette-en-folie-4.jpg"
                 });
                 assert.equal(collection.previousSize, oldSize);
+                
+                var articles = getArticles();
+                console.log(collection.size(), articles.length)
             });
         });
 
         describe('DOM', function(){
 
             it('Should have as many items as models', function(){
-              assert.equal(collection.length, articles.length);
+                var articles = getArticles();
+                assert.equal(collection.length, articles.length);
             });
 
             it('Should select Item', function(){
@@ -94,7 +101,8 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
             });
             
             it('Should call Modal', function(){
-                var modalOpener, id;
+                var modalOpener, id, articles;
+                articles = getArticles();
 
                 id = "zoom-modal";
                 modalOpener = $('.illustration[data-modal="#' + id + '"]', articles.get(0));
@@ -106,7 +114,8 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
             });
             
             it('Picture should be draggable', function(){
-                var draggableEl;
+                var draggableEl, articles;
+                articles = getArticles();
                 draggableEl = $('img[data-wysiwyg-draggable="true"]', articles.get(0));
                 assert.lengthOf(draggableEl, 1);
             });
