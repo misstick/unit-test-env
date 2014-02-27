@@ -141,7 +141,7 @@
                     event.preventDefault();
                     var el = event.currentTarget;
                     var path = $(el).attr("data-modal");
-                    var id = path.substring(0, path.length);
+                    var id = path.substring(1, path.length);
                     if ($(path).get(0)) {
                         return $(path);
                     }
