@@ -125,12 +125,22 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
 
         describe('Views', function(){
 
-            it('Should open Modal', function(){
-                
-            });
+            it('Should show/hide Modal', function(){
+                var _document = getDocument();
+                var _article = getArticles().get(0);
+                var _id = "delete-modal"
+                var _link = $('[data-modal="#' + _id + '"]', _article);
 
-            it('Should hide Modal', function(){
-                
+                // Show Modal
+                assert.equal($("#" + _id, _document).length, 0);
+                _link.trigger("click");
+                assert.equal($("#" + _id, _document).length, 1);
+
+                // Hide Modal
+                var _modal = $("#" + _id, _document);
+                _modal.trigger("click");
+                assert.equal($("#" + _id, _document).length, 0);
+
             });
 
             it('Should display editable title', function(){
@@ -139,7 +149,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         });
 
         after(function(){
-            webpage.close("article");
+            // webpage.close("article");
         });
     });
 });
