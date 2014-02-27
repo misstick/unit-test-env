@@ -26,15 +26,31 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         describe('Model', function(){
 
             it('Should select a model', function(){
-                // Test previous && new value
-                // test if event "change:fake" is triggered
+
+                var _model = new model({
+                    title: "Image10",
+                    illustration: false,
+                    src: "http://www.tuxboard.com/photos/2013/06/Chouette-en-folie-4.jpg"
+                });
+                var _change = sinon.spy();
+                _model.on('change:fake', _change);
+
+                // Test previous
+                assert.equal(_model.isSelected(), false);
+                assert.equal(_change.callCount, 0);
+                _model.select();
+
+                // Event "change:fake" must be triggered
+                assert.equal(_change.callCount, 1);
+
+                // Test new value
+                assert.equal(_model.isSelected(), true);
             });
         });
 
         describe('Collection', function(){
 
             it('Should stringify models', function(){
-                
             });
 
             it('Should store previousSize', function(){
