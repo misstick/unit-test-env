@@ -62,9 +62,6 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                     src: "http://www.tuxboard.com/photos/2013/06/Chouette-en-folie-4.jpg"
                 });
                 assert.equal(collection.previousSize, oldSize);
-                
-                var articles = getArticles();
-                console.log(collection.size(), articles.length)
             });
         });
 
