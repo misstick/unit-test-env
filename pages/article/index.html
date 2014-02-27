@@ -2,13 +2,14 @@
     <head>
         <script src="/vendor/jquery/jquery.js"></script>
         <script src="/vendor/underscore-amd/underscore.js"></script>
+        <script src="/vendor/backbone-amd/backbone.js"></script>
 
         <style>
             #main-content {
                 background: yellow;
                 overflow: hidden;
             }
-            figure {
+            article {
                 padding: 0;
                 margin: 0;
                 float: left;
@@ -16,60 +17,169 @@
                 width: 250px;
                 height: 250px;
             }
-            figure .trash-button,
-            figure .edit-button {
+            article .trash-button,
+            article .edit-button {
                 width: 33%;
                 border: 0;
                 background: white;
                 line-height: 1;
             }
-            figure .trash-button:after {
+            article .trash-button:after {
                 content: "supprimer";
             }
-            figure .edit-button:after {
+            article .edit-button:after {
                 content: "Editer";
             }
-            figure .illustration>img{
+            article .illustration>img{
                 display: block;
                 width: 100%;
                 box-sizing: border-box;
+            }
+            article textarea[disabled] {
+                display: none;
+            }
+            
+            .modal {
+                background: rgba(0,0,0,0.5);
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
             }
         </style>
     </head>
     <body>
         <div id="main-content"></div>
         <script>
-            var collection = [];
-            collection.push({
-                title: "Image1",
-                illustration: true,
-                src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg",
-                cid: "c1"
+            var templatePath = "/templates/article.html";
+            var models = [];
+            var view;
+
+            // Data methods
+            var Article = Backbone.Model.extend({
+                isSelected: function() {
+                    return this.get("illustration");
+                },
+                select: function(options) {
+                    this.set({"illustration": true}, options);
+                    this.trigger('change:fake');
+                }
             });
-            collection.push({
+            var ArticleCollection = Backbone.Collection.extend({
+                model: Article,
+                stringify: function() {
+                    return JSON.stringify(this.toJSON());
+                },
+                add: function(models, options) {
+                    this.previousSize = this.size();
+                    Backbone.Collection.prototype.add.apply(this, arguments);
+                }
+            });
+            models.push({
+                title: "Image1",
+                illustration: false,
+                src: "http://wasistdas.co.uk/Owlsploitation/wp-content/uploads/2012/11/owl-2.jpg"
+            });
+            models.push({
                 title: "Image2",
                 illustration: false,
-                src: "http://miriadna.com/desctopwalls/images/max/Surprised-eagle-owl.jpg",
-                cid: "c2"
+                src: "http://miriadna.com/desctopwalls/images/max/Surprised-eagle-owl.jpg"
             });
-            collection.push({
+            models.push({
                 title: "Image3",
-                illustration: false,
-                src: "http://i.telegraph.co.uk/multimedia/archive/02467/owl_2467479b.jpg",
-                cid: "c3"
+                illustration: true,
+                src: "http://i.telegraph.co.uk/multimedia/archive/02467/owl_2467479b.jpg"
             });
-            collection.push({
+            models.push({
                 title: "Image4",
                 illustration: false,
-                src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg",
-                cid: "c4"
+                src: "http://www.thisiscolossal.com/wp-content/uploads/2012/11/owl-1.jpg"
             });
-            $.ajax("/templates/article.html").done(function(template) {
+
+            // Articles Component
+            var articlesView = Backbone.View.extend({
+
+                el: $("#main-content"),
+
+                collection: new ArticleCollection(models),
+
+                events: {
+                    'click [data-modal]': 'openModal',
+                    'click [data-toggle]': 'displayToggle',
+                    'click .modal': 'closeModal'
+                },
+
+                initialize: function(options) {
+                    this.collection.on("add", this.render.bind(this));
+                    this._template = options.template;
+                    if (this.collection.size()) {
+                        this.render();
+                    }
+                },
+
+                render: function(model, collection) {
+                    var _renderItem = function(model) {
+                        var data = model.toJSON();
+                        data.cid = model.cid;
+                        var content = _.template(this._template, data);
+                        $(this.el).append(content);
+                    }.bind(this);
+
+                    if (!this._initialized) {
+                        this.collection.each(_renderItem);
+                        this._initialized = true;
+                    }
+
+                    // @TODO : test width ADD event
+                    if (typeof model === "object" && model.cid) {
+                        _renderItem(model);
+                    }
+                },
                 
-                _.each(collection, function(model) {
-                    var content = _.template(template, model);
-                    $("#main-content").append(content)
-                })
+                openModal: function(event) {
+                    event.preventDefault();
+                    var el = event.currentTarget;
+                    var path = $(el).attr("data-modal");
+                    var id = path.substring(1, path.length);
+                    if ($(path).get(0)) {
+                        return $(path);
+                    }
+                    $(this.el).append('<div id="' + id + '" class="modal"></span></div>');
+                    return $(path);
+                },
+                
+                closeModal: function(event) {
+                    var el = event.currentTarget;
+                    $(el).remove();
+                },
+                
+                disable: function(el, value) {
+                    if (value === undefined) {
+                        value = true;
+                    }
+                    if (value) {
+                        el.attr("disabled", "disabled");
+                    } else {
+                        el.removeAttr("disabled");
+                    }
+                },
+                
+                displayToggle: function(event) {
+                    event.preventDefault();
+                    var el = event.currentTarget;
+                    var parent = $(el).parents("article");
+                    var path = $(el).attr("data-toggle");
+                    var toggleEl = $(path, parent.get(0));
+                    
+                    this.disable(toggleEl, toggleEl.attr("disabled") === undefined);
+                }
+            });
+
+            // Add Dynamic Content
+            $.ajax(templatePath).done(function(template) {
+                view = new articlesView({template: template});
+                
             });
         </script>
     </body>

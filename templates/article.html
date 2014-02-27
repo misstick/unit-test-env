@@ -1,13 +1,13 @@
-<figure data-selected="<%= illustration %>" data-model="<%= cid %>">
-    <textarea name="medias[][caption]"><%= title %></textarea>
+<article data-model="<%= cid %>">
+    <textarea name="medias[][caption]" disabled="disabled"><%= title %></textarea>
 
-    <a class="illustration" title="Taille réelle de la photo" data-modal="#zoom-media-modal"><img src="<%= src %>" alt="" data-media-model="<%= cid %>" data-wysiwyg-draggable="true" /></a>
+    <a class="illustration" title="Taille réelle de la photo" data-modal="#zoom-modal"><img src="<%= src %>" alt="" data-media-model="<%= cid %>" data-wysiwyg-draggable="true" /></a>
 
     <div class="actions">
-        <button class="trash-button inline" aria-hidden="true" data-modal="#delete-media-modal" title="Supprimer l'image"><i class="icon-trash"></i></button>
-        <button class="edit-button inline" aria-hidden="true" data-target=".mediaItem" title="Modifier les données de l'image"><i class="icon-edit"></i></button>
+        <button class="trash-button inline" aria-hidden="true" data-modal="#delete-modal" title="Supprimer l'image"><i class="icon-trash"></i></button>
+        <button class="edit-button inline" aria-hidden="true" data-toggle="textarea"  title="Modifier les données de l'image"><i class="icon-edit"></i></button>
         <label class="checkbox inline illustrationField" title="Sélectionner comme vignette principale">
             <input type="checkbox" name="medias[][illustration]" value="<%= cid %>" <% if (illustration) { %> checked="checked"<% } %> />
         </label>
     </div>
-</figure>
+</article>
