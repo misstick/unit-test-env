@@ -1,10 +1,6 @@
 define(['jquery', "underscore"], function(jquery, _) {
     "use strict";
     
-    var setContent = function(url) {
-        
-    };
-    
     var getPage = function(uri) {
         var iframe;
         var id = "iframe-" + uri;
