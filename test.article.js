@@ -9,7 +9,7 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
     */
     
     var page, view, collection, model, pageDocument;
-    
+
     var getArticles = function() {
         return $("article", pageDocument);
     }
@@ -19,14 +19,13 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         before(function(done){
             page = webpage.open("article");
             $("body").on("page:complete", function(event) {
-                view = page.view;
-                pageDocument = page.document;
+                view = page.contentWindow.view;
+                pageDocument = page.contentWindow.document;
                 collection = view.collection;
                 model = collection.model;
                 done();
             }.bind(this))
         });
-
         describe('Model', function(){
 
             it('Should select a model', function(){

@@ -111,11 +111,12 @@
                 },
 
                 initialize: function(options) {
-                    this.collection.on("add", this.render.bind(this));
-                    this._template = options.template;
-                    if (this.collection.size()) {
-                        this.render();
-                    }
+                    // console.log("PLOP")
+                    // this.collection.on("add", this.render.bind(this));
+                    // this._template = options.template;
+                    // if (this.collection.size()) {
+                    //     this.render();
+                    // }
                 },
 
                 render: function(model, collection) {

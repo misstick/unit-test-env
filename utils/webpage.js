@@ -1,6 +1,10 @@
 define(['jquery', "underscore"], function(jquery, _) {
     "use strict";
     
+    var _remove = function(el) {
+        $("body").get(0).removeChild(el);
+    }
+    
     var WebPageView = (function () {
         return {
             pages: {},
@@ -21,7 +25,12 @@ define(['jquery', "underscore"], function(jquery, _) {
                 if (!_page) {
                     // Open Page
                     var url = this.getUrl(uri);
-                    _page = window.open(url);
+                    // _page = window.open(url);
+                    var id = "iframe-" + uri;
+                    var url = "/pages/" + uri + "/index.html";
+                    var style = "background: #efefef; border: 0; width: 40%; height: 700px; position: fixed; right: 0; top: 100px;";
+                    $("body").append("<iframe id='" + id + "' src='" + url + "' style='" + style +"'>");
+                    _page = $("#" + id).get(0);
                     
                     // Handle page.loading
                     $(_page.document).ready(function() {
@@ -36,9 +45,9 @@ define(['jquery', "underscore"], function(jquery, _) {
             },
             
             close: function(uri) {
-                var page = this.getPage(uri);
-                if (page) {
-                    page.close();
+                var _page = this.getPage(uri);
+                if (_page) {
+                    _remove(_page);
                     this.removePage(uri);
                 }
             }
