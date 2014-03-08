@@ -71,7 +71,6 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
                 var articles = getArticles();
                 assert.equal(collection.length, articles.length);
             });
-
             it('Should select Item', function(){
               var _index, _model, checkbox;
               // Item selected
@@ -119,26 +118,21 @@ define(['jquery', "underscore", "webpage", "backbone"], function($, _, webpage) 
         });
 
         describe('Views', function(){
-
             it('Should show/hide Modal', function(){
                 var _article = getArticles().get(0);
                 var _id = "delete-modal"
                 var _link = $('[data-modal="#' + _id + '"]', _article);
-
+            
                 // Show Modal
                 assert.equal($("#" + _id, pageDocument).length, 0);
                 _link.trigger("click");
                 assert.equal($("#" + _id, pageDocument).length, 1);
-
-                // Hide Modal
-                var _modal = $("#" + _id, pageDocument);
-                _modal.trigger("click");
-                assert.equal($("#" + _id, pageDocument).length, 0);
-
-            });
-
-            it('Should display editable title', function(){
                 
+                // Hide Modal
+                var _modal = $("#" + _id);
+                _modal.trigger("click");
+                assert.equal($("#" + _id).length, 0);
+            
             });
         });
 

@@ -4,7 +4,8 @@ require.config({
         text:            '/vendor/requirejs-text/text',
         underscore:      '/vendor/underscore-amd/underscore',
         backbone:        '/vendor/backbone-amd/backbone',
-        webpage:         '/utils/webpage'
+        webpage:         '/utils/webpage',
+        dom:             '/utils/dom'
     }
 });
 
